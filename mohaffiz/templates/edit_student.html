@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block content %}
+    <div class="main-footer" style="color: black;">
+        <h1>تعديل معلومات الطالب</h1>
+        <form method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+            {% endbuttons %}
+        </form>
+    </div>
+{% endblock content %}

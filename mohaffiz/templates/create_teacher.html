@@ -3,17 +3,15 @@
 {% load bootstrap5 %}
 
 {% block content %}
-
-<!-- إنشاء حلقة -->
-<div class="main-footer mt-5" style = "color:black;">
-   <center> <h1>إضافة محفظ</h1></center>
+<div class="main-footer mt-5">
+    <h1>إضافة محفظ</h1>
     <form method="post" class="form" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form form %}
-        {% buttons %}
-            <center><button type="submit" class="btn btn-primary">إضافة</button></center>
-        {% endbuttons %}
+        <button type="submit" class="btn btn-primary">إضافة</button>
     </form>
+    
+    <!-- زر إضافة شهادات -->
+    <a href="{% url 'create_certificate' %}" class="btn btn-secondary mt-3">إضافة شهادات</a>
 </div>
-
 {% endblock content %}

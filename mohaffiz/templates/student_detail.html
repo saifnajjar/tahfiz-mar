@@ -8,7 +8,7 @@
 
 
     <!-- تفاصيل الطالب -->
-        <h1>تفاصيل الطالب</h1>
+        <h1>تفاصيل الطالب ({{ student.full_name }})</h1>
         <table class="table">
             <tbody>
                 <tr>
@@ -21,7 +21,39 @@
                 </tr>
                 <tr>
                     <th scope="row">رقم الهوية</th>
-                    <td>{{ student.national_id }}</td>
+                    <td>{{ student.id_number }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">تاريخ الميلاد</th>
+                    <td>{{ student.birth_date }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">العنوان</th>
+                    <td>{{ student.address }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">رقم الجوال</th>
+                    <td>{{ student.personal_mobile }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">رقم جوال ولي الامر</th>
+                    <td>{{ student.guardian_mobile }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">الحفظ الحالي</th>
+                    <td>{{ student.current_hifz }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">مرحلة التعليم</th>
+                    <td>{{ student.education_stage }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">الغياب الشهري</th>
+                    <td>{{ student.Monthly_absence }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">المحفظ</th>
+                    <td>{{ student.teacher}}</td>
                 </tr>
                 <!-- إضافة المزيد من التفاصيل حسب احتياجاتك -->
             </tbody>

@@ -40,20 +40,42 @@ class Student(models.Model):
     # combined_tests =models.PositiveIntegerField('عدد الإختبارات المجتمعة',default=0)# You may want to create a separate model for this
     education_stage = models.CharField('المستوى الدراسي',max_length=100)
     Monthly_absence = models.PositiveIntegerField('عدد أيام الغياب',default=0)
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='students')
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='students', verbose_name="اختر المحفظ")
     def __str__(self):
         return self.full_name
+from django.utils import timezone
 
 class Test(models.Model):
     parts_count = models.PositiveIntegerField('عدد الأجزاء')
     initial_part_number = models.PositiveIntegerField('من بداية جزء')
     final_part_number = models.PositiveIntegerField('إلى نهاية جزء')
-    test_date = models.DateField('تاريخ الإختبار',default=datetime.now())
+    test_date = models.DateField('تاريخ الإختبار', default=timezone.now)
     result = models.IntegerField('معدل الإختبار')
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     
     def __str__(self):
         return f"اختبار للطالب {self.student.full_name} من جزء {self.initial_part_number} إلى جزء {self.final_part_number}"
+    
+
+
+
+
+
+class Certificate(models.Model):
+    CERTIFICATE_TYPES = [
+        ('شرعي', 'شرعي'),
+        ('علمي', 'علمي'),
+    ]
+
+    title = models.CharField('عنوان الشهادة', max_length=100)
+    description = models.TextField('وصف الشهادة')
+    image = models.ImageField('صورة الشهادة', upload_to='certificates/')
+    issue_date = models.DateField('تاريخ الحصول على الشهادة')
+    type = models.CharField('نوع الشهادة', max_length=10, choices=CERTIFICATE_TYPES, default='شرعي')
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='certificates', verbose_name='المحفظ')
+
+    def __str__(self):
+        return self.title
 
 # class Recitation(models.Model):
 #     surah = models.CharField(max_length=255)

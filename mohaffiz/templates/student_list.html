@@ -15,19 +15,24 @@
                     <th scope="col">الصورة</th>
                     <th scope="col">الاسم الرباعي</th>
                     <th scope="col">رقم الهوية</th>
+                    <th scope="col">المحفظ</th>
                     <!-- إضافة المزيد من العناوين العمودية حسب احتياجاتك -->
                     <th scope="col">إجراءات</th>
+                    
                 </tr>
             </thead>
             <tbody>
                 {% for student in students %}
                 <tr>
-                    <td><img src="{{ student.image.url }}" alt="{{ student.full_name }}" width="100"></td>
-                    <td>{{ student.full_name }}</td>
-                    <td>{{ student.national_id }}</td>
+                    <td><a href="{% url 'student_profile' student.id %}"><img src="{{ student.image.url }}" alt="{{ student.full_name }}" width="100"></a></td>
+                    <td><a href="{% url 'student_profile' student.id %}" style="color: black;">{{ student.full_name }}</a></td>
+                    <td>{{ student.id_number }}</td>
+                    <td>{{ student.teacher }}</td>
                     <!-- إضافة المزيد من الحقول حسب احتياجاتك -->
                     <td>
-                        <a href="{% url 'student_detail' student.id %}" class="btn btn-info btn-sm">تفاصيل</a>
+                        <a href="{% url 'student_detail' student.id %}" class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i></a>
+                        <a href="{% url 'edit_student' student.id %}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'confirm_student_delete' student.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
                     </td>
                 </tr>
                 {% endfor %}

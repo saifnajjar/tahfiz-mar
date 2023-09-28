@@ -14,7 +14,13 @@
                         <tbody>
                             <tr>
                                 <td>صورة المحفظ</td>
-                                <td>{{ teacher.image }}</td>
+                                <td>
+                                    {% if teacher.image %}
+                                    <img src="{{ teacher.image.url }}" alt="{{ teacher.full_name }}" style="max-width: 100px; max-height: 100px;">
+                                    {% else %}
+                                    لا توجد صورة متاحة.
+                                    {% endif %}
+                                </td>
                             </tr>
                             <tr>
                                 <td>اسم المحفظ</td>
@@ -42,14 +48,16 @@
                             </tr>
                             <tr>
                                 <td>الحلقة</td>
-                                <td>{{ teacher.circle }}</td>
+                                <td>
+                                    <a href="{% url 'circle_detail' teacher.circle.id %}" style="color: black;">{{ teacher.circle }}</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="card-footer">
-                    <a href="{% url 'circle_update' circle.id %}" class="btn btn-info">تعديل</a>
-                    <a href="{% url 'circle_delete' circle.id %}" class="btn btn-danger">حذف</a>
+                    <a href="" class="btn btn-info">تعديل</a>
+                    <a href="" class="btn btn-danger">حذف</a>
                 </div>
             </div>
         </div>

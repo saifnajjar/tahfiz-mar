@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Circle, Teacher, Student, Test
+from .models import Circle, Teacher, Student, Test, Certificate 
 
 class CircleAdmin(admin.ModelAdmin):
     list_display = ['name', 'masjed_name', 'address', 'work_schedule']
@@ -12,6 +12,10 @@ class StudentAdmin(admin.ModelAdmin):
     
 class TestAdmin(admin.ModelAdmin):
     list_display = ['student', 'test_date', 'result','parts_count','initial_part_number','final_part_number']
+
+class CertificateAdmin(admin.ModelAdmin):
+    list_display = ['title', 'description', 'issue_date', 'teacher', 'type']
+    
     
 # class AchievementAdmin(admin.ModelAdmin):
 #     list_display = ['certificate_name', 'certificate_type', 'teacher']
@@ -27,6 +31,8 @@ admin.site.register(Circle, CircleAdmin)
 admin.site.register(Teacher, TeacherAdmin)
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Test, TestAdmin)
+admin.site.register(Certificate, CertificateAdmin)
+
 # admin.site.register(Achievement, AchievementAdmin)
 # admin.site.register(Recitation, RecitationAdmin)
 # admin.site.register(HonorRoll, HonorRollAdmin)

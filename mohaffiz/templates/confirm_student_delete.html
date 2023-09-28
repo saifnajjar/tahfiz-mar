@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block content %}
+    <div class="main-footer" style="color: black;">
+        <h1>تأكيد حذف الطالب</h1>
+        <form method="post">
+            {% csrf_token %}
+            <p>هل أنت متأكد من رغبتك في حذف الطالب "{{ student.full_name }}"؟</p>
+            <button type="submit" class="btn btn-danger">نعم، حذف الطالب</button>
+            <a href="{% url 'student_detail' student.id %}" class="btn btn-secondary">إلغاء</a>
+        </form>
+    </div>
+{% endblock content %}

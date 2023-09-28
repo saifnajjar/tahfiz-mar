@@ -138,22 +138,6 @@ def test_detail(request, test_id):
     return render(request, "test_detail.html", {"test": test})
 
 
-# def achievement_list(request):
-#     achievements = Achievement.objects.all()
-#     return render(request, 'achievement_list.html', {'achievements': achievements})
-
-# def achievement_detail(request, achievement_id):
-#     achievement = get_object_or_404(Achievement, pk=achievement_id)
-#     return render(request, 'achievement_detail.html', {'achievement': achievement})
-
-
-# def recitation_list(request):
-#     recitations = Recitation.objects.all()
-#     return render(request, 'recitation_list.html', {'recitations': recitations})
-
-# def recitation_detail(request, recitation_id):
-#     recitation = get_object_or_404(Recitation, pk=recitation_id)
-#     return render(request, 'recitation_detail.html', {'recitation': recitation})
 
 
 
@@ -172,15 +156,16 @@ def create_teacher(request):
 
 
 def create_student(request):
+    teachers = Teacher.objects.all()
     if request.method == "POST":
-        form = StudentForm(request.POST)
+        form = StudentForm(request.POST, request.FILES)  # قم بتمرير request.FILES للتعامل مع ملف الصورة
         if form.is_valid():
             form.save()
             return redirect("student_list")
     else:
         form = StudentForm()
 
-    return render(request, "create_student.html", {"form": form})
+    return render(request, "create_student.html", {"form": form, "teachers": teachers})
 
 
 def create_test(request):
@@ -194,6 +179,68 @@ def create_test(request):
 
     return render(request, "create_test.html", {"form": form})
 
+
+
+from django.shortcuts import render, get_object_or_404
+from .models import Teacher
+
+def teacher_profile(request, teacher_id):
+    teacher = get_object_or_404(Teacher, id=teacher_id)
+    students = teacher.students.all()  # استعلام لجلب الطلاب الخاصين بالمحفظ
+
+    return render(request, 'teacher_profile.html', {'teacher': teacher, 'students': students})
+
+
+def edit_student(request, student_id):
+    student = get_object_or_404(Student, id=student_id)
+    
+    if request.method == 'POST':
+        form = StudentForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            return redirect('student_detail', student_id=student.id)
+    else:
+        form = StudentForm(instance=student)
+
+    return render(request, 'edit_student.html', {'form': form, 'student': student})
+
+
+
+def confirm_student_delete(request, student_id):
+    student = get_object_or_404(Student, id=student_id)
+
+    if request.method == 'POST':
+        student.delete()
+        return redirect('student_list')  # توجيه المستخدم بعد الحذف
+
+    return render(request, 'confirm_student_delete.html', {'student': student})
+
+
+
+
+def student_profile(request, student_id):
+    student = get_object_or_404(Student, pk=student_id)
+    
+    return render(request, 'student_profile.html', {'student': student})
+
+
+
+
+
+from django.shortcuts import render, redirect
+from .models import Certificate
+from .forms import CertificateForm
+
+def create_certificate(request):
+    if request.method == 'POST':
+        form = CertificateForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('teacher_list')  # توجيه المستخدم إلى صفحة قائمة المحفظين بعد الحفظ
+    else:
+        form = CertificateForm()
+    
+    return render(request, 'create_certificate.html', {'form': form})
 
 # def create_achievement(request):
 #     if request.method == 'POST':

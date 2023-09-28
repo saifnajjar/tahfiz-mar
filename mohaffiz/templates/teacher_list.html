@@ -1,19 +1,16 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
-    <!-- العنوان والزر لإنشاء حلقة جديدة -->
-
-    
+    <!-- العنوان والزر لإنشاء محفظة جديدة -->
     <div class="main-footer">
         <h1 style="text-align: center;">قائمة المحفظين</h1>
         <br>
         <a href="{% url 'create_teacher' %}" class="btn btn-primary">إضافة محفظ</a>
     </div>
 
-    <!-- عرض قائمة الحلقات -->
+    <!-- عرض قائمة المحفظين -->
     <div class="main-footer">
-        <table style="color:black;text-align: center;" class="table">
+        <table style="color: black; text-align: center;" class="table">
             <thead>
                 <tr>
                     <th scope="col">صورة المحفظ</th>
@@ -30,20 +27,26 @@
             <tbody>
                 {% for teacher in teachers %}
                 <tr>
-                    <td><img src="{{ teacher.image.url }}" alt="صورة المحفظ" style="max-width: 70px; max-height: 70px;border-radius: 10px;"></td>
-                    <td>{{ teacher.full_name }}</td>
+                    <td>
+                        <a href="{% url 'teacher_profile' teacher.id %}">
+                            <img src="{{ teacher.image.url }}" alt="صورة المحفظ" style="max-width: 70px; max-height: 70px; border-radius: 10px;">
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'teacher_profile' teacher.id %}" style="color: black;">
+                            {{ teacher.full_name }}
+                        </a>
+                    </td>
                     <td>{{ teacher.id_number }}</td>
                     <td>{{ teacher.date_of_birth }}</td>
                     <td>{{ teacher.address }}</td>
                     <td>{{ teacher.personal_mobile }}</td>
                     <td>{{ teacher.Monthly_absence }}</td>
                     <td>{{ teacher.circle }}</td>
-                    
                     <td>
                         <a href="{% url 'teacher_detail' teacher.id %}" class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i></a>
                         <a href="{% url 'teacher_update' teacher.id %}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
                         <a href="{% url 'teacher_delete' teacher.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
-
                     </td>
                 </tr>
                 {% endfor %}
@@ -55,7 +58,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-2SKs35zZ3l5O3Lkc5U5m48U7M0/6Ht02EoBrCtwpqyIq13FquF2F5BKt5v5Z5hFJ" crossorigin="anonymous"></script>
     <!-- تضمين مكتبة jQuery (إذا لزم الأمر) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+uMPhJ8SnGExs3Wp3Rt5jc5xjPmG7wqzj5EJ7KC8b5ZYjN/t" crossorigin="anonymous"></script>
-
-
 {% endblock content %}
     
